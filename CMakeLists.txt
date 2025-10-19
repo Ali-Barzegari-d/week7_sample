@@ -43,6 +43,6 @@ add_test(NAME MapContainer_tests COMMAND $<TARGET_FILE:MapContainer_tests>)
 add_library(NumericPipeline src/NumericPipeline.cpp)
 target_include_directories(NumericPipeline PUBLIC include)
 
-add_executable(MNumericPipeline_tests tests/test_NumericPipeline.cpp)
+add_executable(NumericPipeline_tests tests/test_NumericPipeline.cpp)
 target_link_libraries(NumericPipeline_tests PRIVATE NumericPipeline)
 add_test(NAME NumericPipeline_tests COMMAND $<TARGET_FILE:NumericPipeline_tests>)
