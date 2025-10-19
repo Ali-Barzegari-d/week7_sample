@@ -41,7 +41,6 @@ public:
         // TODO: wrap proc.process() into lambda and add to stages
     }
 
-    // Run all stages sequentially on data (borrowed or owned)
     std::vector<T> run() const {
         // TODO:
         // 1. Get input range (from owned_data or external_data)

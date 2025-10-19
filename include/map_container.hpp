@@ -9,7 +9,6 @@
 // - Accepts any Container with begin()/end() and a unary callable f.
 // - Returns std::vector<Result> where Result is decltype(f(*begin(container)))
 // - Use perfect-forwarding for the callable.
-// Students: implement the TODOs below.
 
 template <typename Container, typename F>
 auto map_container(const Container& c, F&& f)

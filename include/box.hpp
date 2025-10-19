@@ -8,7 +8,6 @@
 // - Holds a single value of type T
 // - Supports comparison (==, !=, <, >)
 // - Supports addition (Box<T> + Box<T>) returning Box<Result>
-// - Students must implement TODO parts.
 
 template <typename T>
 class Box {
