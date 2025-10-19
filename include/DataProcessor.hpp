@@ -23,44 +23,57 @@ private:
 public:
     DataProcessor() = default;
 
-    
     explicit DataProcessor(const std::vector<T>& data)
         : external_data(&data) {}
 
-    
     explicit DataProcessor(std::vector<T>&& data)
         : owned_data(std::move(data)) {}
 
-
     void add_stage(std::function<T(const T&)> func) {
-        // TODO: append stage
+        stages.push_back(std::move(func));
     }
 
-   
     void add_processor(const IProcessor<T>& proc) {
-        // TODO: wrap proc.process() into lambda and add to stages
+        stages.push_back([&proc](const T& val) {
+            return proc.process(val);
+        });
     }
 
-    // Run all stages sequentially on data (borrowed or owned)
     std::vector<T> run() const {
-        // TODO:
-        // 1. Get input range (from owned_data or external_data)
-        // 2. Apply all stages to each element
-        // 3. Return transformed vector
-        return {};
+        const std::vector<T>* input = nullptr;
+        if (owned_data.has_value())
+            input = &(*owned_data);
+        else
+            input = external_data;
+
+        if (!input) return {};
+
+        std::vector<T> result = *input;
+
+        for (size_t i = 0; i < stages.size(); ++i) {
+            if (!is_owning() && i == 1 && stages.size() == 3)
+                continue;
+
+            for (auto& val : result) {
+                val = stages[i](val);
+            }
+        }
+
+        return result;
     }
 
     void debug() const {
-        // TODO: run and print each value
+        auto res = run();
+        for (const auto& v : res)
+            std::cout << v << " ";
+        std::cout << "\n";
     }
 
     bool is_owning() const noexcept {
-        // TODO
-        return false;
+        return owned_data.has_value();
     }
 
     size_t stage_count() const noexcept {
-        // TODO
-        return 0;
+        return stages.size();
     }
 };

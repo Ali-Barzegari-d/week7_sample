@@ -18,33 +18,34 @@ public:
     StorageManager() = default;
 
     void add(const T& value) {
-        // TODO: add value to data
+        data.push_back(value);
     }
 
     void add(T&& value) {
-        // TODO: move value into data
+        data.push_back(std::move(value));
     }
 
     T get(size_t index) const {
-        // TODO: return element at index, throw std::out_of_range if invalid
-        return {};
+        if (index >= data.size())
+            throw std::out_of_range("Index out of range");
+        return data[index];
     }
 
     size_t size() const noexcept {
-        // TODO: return size
-        return 0;
+        return data.size();
     }
 
     void clear() noexcept {
-        // TODO: clear all data
+        data.clear();
     }
 
-    StorageManager(StorageManager&& other) noexcept {
-        // TODO: move construct
-    }
+    StorageManager(StorageManager&& other) noexcept
+        : data(std::move(other.data)) {}
 
     StorageManager& operator=(StorageManager&& other) noexcept {
-        // TODO: move assign
+        if (this != &other) {
+            data = std::move(other.data);
+        }
         return *this;
     }
 
@@ -61,33 +62,37 @@ public:
     StorageManager() = default;
 
     void add(const std::string& s) {
-        // TODO: push_back
+        items.push_back(s);
     }
 
     void add(std::string&& s) {
-        // TODO: move and push_back
+        items.push_back(std::move(s));
     }
 
     std::string get(size_t index) const {
-        // TODO: access nth element from list
-        return {};
+        if (index >= items.size())
+            throw std::out_of_range("Index out of range");
+
+        auto it = items.begin();
+        std::advance(it, index);
+        return *it;
     }
 
     size_t size() const noexcept {
-        // TODO: return list size
-        return 0;
+        return items.size();
     }
 
     void clear() noexcept {
-        // TODO: clear the list
+        items.clear();
     }
 
-    StorageManager(StorageManager&& other) noexcept {
-        // TODO: move construct
-    }
+    StorageManager(StorageManager&& other) noexcept
+        : items(std::move(other.items)) {}
 
     StorageManager& operator=(StorageManager&& other) noexcept {
-        // TODO: move assign
+        if (this != &other) {
+            items = std::move(other.items);
+        }
         return *this;
     }
 

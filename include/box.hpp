@@ -4,14 +4,9 @@
 #include <iostream>
 #include <sstream>
 
-// Box<T>
-// - Holds a single value of type T
-// - Supports comparison (==, !=, <, >)
-// - Supports addition (Box<T> + Box<T>) returning Box<Result>
-// - Students must implement TODO parts.
-
 template <typename T>
 class Box {
+private:
     T value;
 
 public:
@@ -23,34 +18,30 @@ public:
     const T& get() const noexcept { return value; }
 
     bool operator==(const Box& other) const {
-        // TODO
-        return false;
+        return value == other.value;
     }
 
     bool operator!=(const Box& other) const {
-        // TODO
-        return false;
+        return !(*this == other);
     }
 
     bool operator<(const Box& other) const {
-        // TODO
-        return false;
+        return value < other.value;
     }
 
     bool operator>(const Box& other) const {
-        // TODO
-        return false;
+        return value > other.value;
     }
 
     template <typename U = T>
     auto operator+(const Box<U>& other) const
         -> Box<decltype(std::declval<U>() + std::declval<U>())> {
-        // TODO
-        return Box<decltype(std::declval<U>() + std::declval<U>())>{};
+        using ResultType = decltype(std::declval<U>() + std::declval<U>());
+        return Box<ResultType>(value + other.get());
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Box& b) {
-        // TODO: print value inside brackets like [value]
+        os << "[" << b.value << "]";
         return os;
     }
 };
